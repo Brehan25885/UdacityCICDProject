@@ -157,7 +157,7 @@ jobs:
           id: "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
 
       # Here's where you will add some code to rollback on failure      
-  configure-infrastructure:
+  configure-server-infrastructure:
     docker:
       - image: python:3.7-alpine3.11
     steps:
@@ -179,7 +179,7 @@ jobs:
 
 
 workflows:
-  my_workflow:
+  change_workflow:
     jobs:
       - build-frontend
       - build-backend
@@ -201,7 +201,7 @@ workflows:
             - test-backend
             - scan-frontend
             - scan-backend
-      - configure-infrastructure:
+      -  configure-server-infrastructure:
           requires:
             - deploy-infrastructure
 
