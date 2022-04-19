@@ -233,7 +233,7 @@ jobs:
           name: Install dependencies
           command: |
             # install the dependencies needed for your playbook
-            apk add --update ansible tar gzip nodejs
+            apk add --update ansible tar gzip nodejs npm
       - attach_workspace:
           at: ~/
       - run:
