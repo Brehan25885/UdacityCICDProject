@@ -233,14 +233,14 @@ jobs:
           name: Install dependencies
           command: |
             # install the dependencies needed for your playbook
-            apk add --update ansible
+            apk add --update ansible tar
       - attach_workspace:
           at: ~/
       - run:
           name: Deploy backend
           command: |
             cd backend
-            npm i
+            npm install
             npm run build
             cd ..
             # Zip the directory
