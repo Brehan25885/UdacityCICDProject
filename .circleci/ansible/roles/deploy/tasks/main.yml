@@ -2,13 +2,13 @@
 - name: "copy"
   become: true
   copy:
-    src: /home/artifact.tar.gz
+    src: /root/project/artifact.tar.gz
     dest: /home/ubuntu/backend-code.tar.gz
 
 - name: start
   shell: |
     cd /home/ubuntu/
-    tarxf ackend-code.tar.gz -C /home/circleci/project/backend
+    tarxf backend-code.tar.gz -C /home/circleci/project/backend
     cd /home/circleci/project/backend
     sudo npm install -g npm@latest
     sudo npm install -g webpack-dev-server
