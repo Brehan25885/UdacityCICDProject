@@ -193,7 +193,7 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-                curl https://kvdb.io/MWasZoap9yjThojaf53T2A/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+                curl -k https://kvdb.io/MWasZoap9yjThojaf53T2A/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
   deploy-frontend:
     docker:
@@ -228,7 +228,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["9f:ac:71:88:44:c0:1a:1f:60:93:16:ca:ba:26:de:54"] # You can get this ID in the section where you registered the SSH Key
+          fingerprints: ["9f:ac:71:88:44:c0:1a:1f:60:93:16:ca:ba:26:de:54"]
       - run:
           name: Install dependencies
           command: |
