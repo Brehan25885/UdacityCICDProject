@@ -12,8 +12,6 @@ commands:
     parameters:
       id:
         type: string
-      s3url:
-        type: string
     steps:
       - run:
           name: Destroy environments
