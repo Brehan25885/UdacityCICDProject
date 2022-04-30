@@ -12,12 +12,34 @@ commands:
     parameters:
       id:
         type: string
+      s3url:
+        type: string
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name << parameters.id >>
+            aws cloudformation delete-stack --stack-name "udapeople-backend-<<parameters.id>>"
+            aws cloudformation delete-stack --stack-name "udapeople-frontend-<<parameters.id>>"
+            aws s3 rm s3://udapeople-<< parameters.id>>
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      workflow_id:
+        type: string
+    steps:
+      - run:
+          name: Revert migrations
+          # Add when this will run
+          command: |
+            SUCCESS=$(curl --insecure  https://kvdb.io/MWasZoap9yjThojaf53T2A/migration_<< parameters.workflow_id >>)
+            # Logic for reverting the database state
+            if (( $SUCCESS == 1 ));
+            then
+                cd ~/project/backend
+                npm install
+                npm run migration:revert
+            fi              
 
 jobs:
   build-frontend:
@@ -152,9 +174,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment:
-          id: "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
-      - destroy-environment:
-          id: "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
+          id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
       # Here's where you will add some code to rollback on failure
   configure-infrastructure:
@@ -293,6 +313,12 @@ jobs:
             else
               return 1
             fi
+      - destroy-environment:
+          id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - revert-migrations:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+
       # Here's where you will add some code to rollback on failure  
 
 
