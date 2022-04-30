@@ -17,7 +17,7 @@ commands:
           command: |
             aws cloudformation delete-stack --stack-name "udapeople-backend-<<parameters.id>>"
             aws cloudformation delete-stack --stack-name "udapeople-frontend-<<parameters.id>>"
-            # aws s3 rm s3://udapeople-<< parameters.id>>
+            aws s3 rm s3://udapeople-<< parameters.id>>
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
@@ -26,7 +26,7 @@ commands:
     steps:
       - run:
           name: Revert migrations
-          # Add when this will run
+          when: on_fail
           command: |
             SUCCESS=$(curl --insecure  https://kvdb.io/MWasZoap9yjThojaf53T2A/migration_<< parameters.workflow_id >>)
             # Logic for reverting the database state
@@ -313,9 +313,6 @@ jobs:
           id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - revert-migrations:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-
-
-      # Here's where you will add some code to rollback on failure  
 
 
 workflows:
