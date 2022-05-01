@@ -1,0 +1,5 @@
+repo
+https://github.com/Brehan25885/UdacityCICDProject
+
+s3 bucket
+http://udapeople-968ab2c.s3-website-us-east-1.amazonaws.com
