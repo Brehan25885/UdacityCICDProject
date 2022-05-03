@@ -8,8 +8,11 @@
 - name: start
   shell: |
     cd /home/ubuntu/
-    tarxf backend-code.tar.gz -C /home/circleci/project/backend
-    cd /home/circleci/project/backend
+    mkdir project
+    tar -xf backend-code.tar.gz -C project/
+    cd project
+    curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+    sudo apt-get install -y nodejs
     sudo npm install -g npm@latest
     sudo npm install -g webpack-dev-server
     sudo npm install
