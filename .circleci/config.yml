@@ -269,7 +269,7 @@ jobs:
             echo    TYPEORM_DATABASE=$TYPEORM_DATABASE                     >> ".env"
             npm install
             npm run build
-            cat backend/.env
+            cat .env
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
